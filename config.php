@@ -44,7 +44,7 @@ $url = ($_SERVER['HTTPS'] ? "https" : "http")."://".$_SERVER['HTTP_HOST']."/";
 			<hr />
 			<div class="row">
 				<div class="col-xs-12">
-				<label>Deine URL lautet:<br /><input type="text" id="url" style="width: 100%;" value="<?php echo $url; ?>?action=busy"></label>
+				<label>Deine URL lautet:<br /><input type="text" id="url" style="width: 100%;" value="<?php echo $url; ?>?action=busy" size="100"></label>
 				</div>
 			</div>
 		</div>
