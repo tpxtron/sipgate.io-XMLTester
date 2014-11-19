@@ -26,7 +26,7 @@ class SipgateIO {
 	 * @param DOMDocument $dom for dependency injection purposes
 	 * @param String $charset to use an alternate charset
 	 */
-	public function __construct(DOMDocument $dom = null, String $charset = null) {
+	public function __construct(DOMDocument $dom = null, string $charset = null) {
 		if(isset($dom)) {
 			$this->dom = $dom;
 		} else {
