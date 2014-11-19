@@ -30,7 +30,7 @@ $(document).ready(function() {
 
 	$('#dialNumber, #playFile, #sayText, #amount').focus(function(e) {
 		$('input[type=radio]').removeAttr('checked');
-		$(e.target).closest('input[type=radio]').attr('checked');
+		$(e.target).closest('input[type=radio]').attr('checked','checked');
 	});
 
 	function update() {
