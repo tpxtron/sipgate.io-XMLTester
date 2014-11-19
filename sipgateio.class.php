@@ -26,11 +26,11 @@ class SipgateIO {
 	 * @param DOMDocument $dom for dependency injection purposes
 	 * @param String $charset to use an alternate charset
 	 */
-	public function __construct(DOMDocument $dom = null, String $charset = "UTF-8") {
+	public function __construct(DOMDocument $dom = null, String $charset = null) {
 		if(isset($dom)) {
 			$this->dom = $dom;
 		} else {
-			$this->dom = new DOMDocument("1.0",$charset);
+			$this->dom = new DOMDocument("1.0",($charset ? $charset : "UTF-8"));
 		}
 
 		$this->response = $this->dom->createElement('Response');
