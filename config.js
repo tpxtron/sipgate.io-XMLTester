@@ -29,8 +29,8 @@ $(document).ready(function() {
 	});
 
 	$('#dialNumber, #playFile, #sayText, #amount').focus(function(e) {
-		$('input[type=radio]').removeAttr('checked');
-		$('#amount').parent().find('input[type=radio]').attr('checked','checked');
+		$(':radio').prop('checked',false);
+		$(e.target).parent().find('input[type=radio]').prop('checked',true);
 		update();
 	});
 
