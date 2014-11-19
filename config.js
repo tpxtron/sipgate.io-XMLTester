@@ -28,6 +28,11 @@ $(document).ready(function() {
 		update();
 	});
 
+	$('#dialNumber, #playFile, #sayText, #amount').focus(function(e) {
+		$('input[type=radio]').removeAttribute('checked');
+		$(e.target).closest('input[type=radio]').attr('checked');
+	});
+
 	function update() {
 		var action = $('.check:checked').data('action');
 		var additionalParams = "";
