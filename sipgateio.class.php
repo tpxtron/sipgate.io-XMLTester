@@ -80,18 +80,35 @@ class SipgateIO {
 	 * Call a number (e.g. to forward the incoming call)
 	 *
 	 * @param string $number the number to be dialled in E164 (http://de.wikipedia.org/wiki/E.164) format, e.g. "4915799912345"
+	 * @param string $callerId the caller Id in E164 format
 	 */
-	public function dial($number) {
+	public function dial($number = null, $callerId = null, $anonymous = null) {
 		$dial = $this->dom->createElement('Dial');
-		$number = $this->dom->createElement('Number',$number);
-		$dial->appendChild($number);
+
+		if(isset($callerId)) {
+			$dialCallerId = $this->dom->createAttribute('callerId');
+			$dialCallerId->value = $callerId;
+			$dial->appendChild($dialCallerId);
+		}
+		if(isset($anonymous)) {
+			$dialCallerId = $this->dom->createAttribute('anonymous');
+			$dialCallerId->value = $anonymous;
+			$dial->appendChild($dialCallerId);
+		}
+
+		if(isset($number)) {
+			$number = $this->dom->createElement('Number',$number);
+			$dial->appendChild($number);
+		}
 		$this->response->appendChild($dial);
 	}
 
 	/**
 	 * Send call to voicemail
+	 *
+	 * @param string $callerId the caller Id in E164 format
 	 */
-	public function voicemail() {
+	public function voicemail($callerId = null) {
 		$dial = $this->dom->createElement('Dial');
 		$voicemail = $this->dom->createElement('Voicemail');
 		$dial->appendChild($voicemail);
@@ -115,6 +132,27 @@ class SipgateIO {
 	public function hangup() {
 		$hangup = $this->dom->createElement('Hangup');
 		$this->response->appendChild($hangup);
+	}
+
+	/**
+	 * Set the caller ID
+	 *
+	 * @param string $callerId the caller ID
+	 * @param boolean $anonymous toggle anonymous if set to true
+	 */
+	public function callerId($callerId = null, $anonymous = null) {
+		$set = $this->dom->createElement('Set');
+		$caller = $this->dom->createElement('CallerId');
+		if(isset($callerId)) {
+			$number = $this->dom->createElement('Number',$callerId);
+		}
+		if(isset($anonymous) && $anonymous == true) {
+			$number = $this->dom->createElement('Anonymous');
+		}
+
+		$caller->appendChild($number);
+		$set->appendChild($caller);
+		$this->response->appendChild($set);
 	}
 
 	/**
