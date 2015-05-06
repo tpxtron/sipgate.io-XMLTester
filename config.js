@@ -40,6 +40,7 @@ $(document).ready(function() {
 		switch(action) {
 			case 'dial':
 				additionalParams = "&number=" + encodeURIComponent($('#dialNumber').val());
+				additionalParams = additionalParams + "&dialCallerId=" + encodeURIComponent($('#dialNumberCallerId').val());
 				break;
 			case 'play':
 				additionalParams = "&file=" + encodeURIComponent($('#playFile').val());
@@ -57,6 +58,21 @@ $(document).ready(function() {
 		}
 		if($('#charset').val() == "iso") {
 			additionalParams = additionalParams + "&charset=iso";
+		}
+		if($('#setCallerId').prop('checked') && $('#callerId').val() != "") {
+			additionalParams = additionalParams + "&callerId=" + $('#callerId').val();
+		}
+		if($('#sleep').prop('checked') && $('#sleepSeconds').val() != "") {
+			additionalParams = additionalParams + "&sleep=" + $('#sleepSeconds').val();
+		}
+		if($('#dialoriginal').prop('checked')) {
+			additionalParams = additionalParams + "&dialoriginal=true";
+		}
+		if($('#dialvoicemail').prop('checked')) {
+			additionalParams = additionalParams + "&dialvoicemail=true";
+		}
+		if($('#emptyresponse').prop('checked')) {
+			additionalParams = additionalParams + "&emptyresponse=true";
 		}
 
 		var url = $('#hiddenURL').val();

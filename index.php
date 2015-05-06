@@ -28,6 +28,8 @@ if(isset($_GET['broken_header'])) {
 }
 $sipgateio = new SipgateIO(null,(isset($_GET['charset']) && $_GET['charset'] == "iso" ? "ISO-8859-1" : "UTF-8"));
 
+if(isset($_GET['emptyresponse']) && $_POST['to'] == "55000") { die($sipgateio->getResponseXML()); }
+
 // Decide, what action should be done
 $_GET['action'] = strtolower($_GET['action']);
 switch($_GET['action']) {
@@ -47,7 +49,12 @@ switch($_GET['action']) {
 		$sipgateio->voicemail();
 		break;
 	case 'dial':
-		$sipgateio->dial($_GET['number']);
+		$number = (isset($_GET['dialoriginal']) ? $_POST['to'] : $_GET['number']);
+		if(isset($_GET['dialvoicemail']) && $_POST['to'] == "55000") {
+			$sipgateio->voicemail();
+		} else {
+			$sipgateio->dial($number, (isset($_GET['dialCallerId']) ? $_GET['dialCallerid'] : null));
+		}
 		break;
 	case 'broken_tag':
 		$sipgateio->customTag("Wurst");
@@ -78,6 +85,11 @@ switch($_GET['action']) {
 		die('<?xml version="1.0" encoding="UTF-8"?><Response>This is broken to maximum extent');
 		break;
 }
+
+if(isset($_GET['callerId'])) {
+	$sipgateio->callerId($_GET['callerId']);
+}
+
 
 // To simulate a slow server, sleeping is possible, too.
 if(isset($_GET['sleep'])) {
