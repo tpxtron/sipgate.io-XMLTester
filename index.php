@@ -53,7 +53,7 @@ switch($_GET['action']) {
 		if(isset($_GET['dialvoicemail']) && $_POST['to'] == "55000") {
 			$sipgateio->voicemail();
 		} else {
-			$sipgateio->dial($number, (isset($_GET['dialCallerId']) ? $_GET['dialCallerid'] : null));
+			$sipgateio->dial($number, (isset($_GET['dialCallerId']) ? $_GET['dialCallerId'] : null));
 		}
 		break;
 	case 'broken_tag':
@@ -89,7 +89,6 @@ switch($_GET['action']) {
 if(isset($_GET['callerId'])) {
 	$sipgateio->callerId($_GET['callerId']);
 }
-
 
 // To simulate a slow server, sleeping is possible, too.
 if(isset($_GET['sleep'])) {
